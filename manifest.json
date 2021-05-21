@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-toggle-vim",
 	"name": "Toggleable Vim Mode",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"minAppVersion": "0.12.3",
 	"description": "This Plugins provides a Hotkey to toggle Obsidian's Vim Mode Emulation.",
 	"author": "phibr0",
