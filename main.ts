@@ -6,24 +6,18 @@ export default class ToggleVimPlugin extends Plugin {
 		this.addCommand({
 			id: 'toggle-vim-mode',
 			name: 'Toggle Vim Mode',
-			checkCallback: (checking: boolean) => {
-				let leaf: WorkspaceLeaf = this.app.workspace.activeLeaf;
-				if (leaf.view instanceof MarkdownView) {
-					if (!checking) {
+			callback: () => {
+				//@ts-ignore
+				this.app.vault.setConfig("vimMode", !this.app.vault.getConfig("vimMode"));
+				this.app.workspace.iterateAllLeaves((i) => {
+					if (i.view instanceof MarkdownView) {
 						//@ts-ignore
-						this.app.vault.setConfig("vimMode", !this.app.vault.getConfig("vimMode"));
-						this.app.workspace.iterateAllLeaves(async (i) => {
-							if (i.view instanceof MarkdownView) {
-								//@ts-ignore
-								i.view.editor.cm.setOption("keyMap", this.app.vault.getConfig("vimMode")?"vim":"default");
-								//@ts-ignore
-								i.view.editor.cm.refresh();
-							}
-						});
+						i.view.editor.cm.setOption("keyMap", this.app.vault.getConfig("vimMode") ? "vim" : "default");
+						//@ts-ignore
+						i.view.editor.cm.refresh();
+						console.log("toggled vim");
 					}
-					return true;
-				}
-				return false;
+				});
 			}
 		});
 	}
